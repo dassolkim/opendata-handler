@@ -20,7 +20,7 @@ async function main(){
      * Get RDF Catalog Test
      */
 
-    const catalog = await dc.getCatalog(USsourceInfo)
+    /* const catalog = await dc.getCatalog(USsourceInfo)
     console.log(`######### Collect ${USsourceInfo.name} on Web (data portal) #########`)
     //console.log(`Get RDF contents: ${catalog}`)
     //console.log(typeof(catalog)) // string
@@ -31,9 +31,8 @@ async function main(){
         console.log(`collecting and storing ${USsourceInfo.name} file is succeeded`)
     } else{
         console.log('storing file is failed')
-    }
+    } */
 
-    // UK test file read
     const dataDir = './data/'
     const format = 'CSV'
     const fileData = fh.readCatalog(dataDir, USsourceInfo)
