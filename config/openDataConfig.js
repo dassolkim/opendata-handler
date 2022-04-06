@@ -1,10 +1,12 @@
 const UKdefaultUrl = "https://data.gov.uk/"
-const USAdefaultUrl = "https://catalog.data.gov/"
+const USdefaultUrl = "https://catalog.data.gov/"
 const CAdefaultUrl = "https://open.canada.ca/data/en/"
 const CHdefaultUrl = "https://opendata.swiss/en/"
 
+const formatList = ['CSV', 'GeoJSON', 'KML', 'JSON', 'HTML', 'XLSX']
+
 exports.UKdefaultUrl = UKdefaultUrl
-exports.USAdefaultUrl = USAdefaultUrl
+exports.USdefaultUrl = USdefaultUrl
 exports.CAdefaultUrl = CAdefaultUrl
 exports.CHdefaultUrl = CHdefaultUrl
 

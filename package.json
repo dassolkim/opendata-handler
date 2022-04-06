@@ -1,7 +1,7 @@
 {
-  "name": "table_discovery",
+  "name": "open-data-handler",
   "version": "1.0.0",
-  "description": "",
+  "description": "This project is data collector for table discovery using airbyte",
   "main": "test.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,6 +9,8 @@
   "author": "dasol kim",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.26.0"
+    "axios": "^0.26.0",
+    "fast-xml-parser": "^4.0.7",
+    "n3": "^1.16.0"
   }
 }
