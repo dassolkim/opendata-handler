@@ -4,6 +4,7 @@ const CAdefaultUrl = "https://open.canada.ca/data/en/"
 const CHdefaultUrl = "https://opendata.swiss/en/"
 
 const formatList = ['CSV', 'GeoJSON', 'KML', 'JSON', 'HTML', 'XLSX']
+const fileFormat = ['csv', 'json', 'jsonl', 'xlsx', 'parquet', 'feather']
 
 exports.UKdefaultUrl = UKdefaultUrl
 exports.USdefaultUrl = USdefaultUrl
