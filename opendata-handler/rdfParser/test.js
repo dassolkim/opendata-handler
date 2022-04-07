@@ -1,4 +1,4 @@
-const xp = require('./xml-parser')
+const rp = require('./rdf-parser')
 const fh = require('../fileHandler/file-handler')
 
 const formatList = ['CSV', 'GeoJSON', 'KML', 'JSON', 'HTML', 'XLSX']
@@ -8,13 +8,16 @@ function test(){
     const format = 'JSON'
     const sourceInfo = {
         type: 'catalog',
-        name: 'uk_catalog'
+        name: 'us_catalog'
     }
-    const catalog = xp.catalogParser(fh.readFile('./data/', sourceInfo))
-    const datasets = xp.datasetParser(catalog)
-    const urls = xp.distributionParser(catalog, format)
+    const catalog = rp.catalogParser(fh.readCatalog('./data/', sourceInfo))
+    const datasets = rp.datasetParser(catalog)
+    const urls = rp.distributionParser(catalog, format)
+    const schema = rp.schemaParser(catalog)
     //const dist = test['rdf:RDF']['dcat:Distribution']
-    //console.log(JSON.stringify(dist, null, 2))
+    // console.log(JSON.stringify(catalog, null, 2))
+    // console.log(catalog)
+    console.log(schema)
     const url_count = urls.length
     const dataset_count = datasets.length
     console.log(`number of ${format} files in catalog: ${url_count}`)

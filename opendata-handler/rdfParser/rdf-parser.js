@@ -1,6 +1,6 @@
 const { XMLParser, XMLBuilder, XMLValidator } = require('fast-xml-parser')
 
-module.exports = {catalogParser, distributionParser, datasetParser}
+module.exports = {catalogParser, distributionParser, datasetParser, schemaParser}
 
 
 function catalogParser(data){
@@ -29,6 +29,7 @@ function distributionParser(catalog, format){
     while(i < count){
         if(dist[i]['dct:format'] == format){
             //console.log(dist[i])
+            if(j%10 == 0) console.log(dist[i])
             url_list[j] = dist[i]['dcat:accessURL']['@_rdf:resource']
             j++
         }
@@ -50,4 +51,22 @@ function datasetParser(catalog){
   console.log(`Number of Datasets in Catalog: ${count}`)
 
   return dataset
+}
+
+function schemaParser(catalog){
+    const schema = catalog['rdf:RDF']['hydra:PagedCollection']
+
+    const fp = schema['hydra:firstPage']
+    const lp = schema['hydra:lastPage']
+    const np = schema['hydra:nextPage']
+    const ti = schema['hydra:totalItems']['#text']
+
+    const results = {
+        firstPage: fp,
+        lastPage: lp,
+        nextPage: np,
+        totalItem: ti
+    }
+
+    return results
 }
