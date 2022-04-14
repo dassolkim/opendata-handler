@@ -1,3 +1,4 @@
 node_modules/
 config/connectConfig.js
 airbyte-api-module/
+pg-handler/pg-config
