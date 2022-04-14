@@ -1,4 +1,5 @@
 node_modules/
 config/connectConfig.js
 airbyte-api-module/
-pg-handler/pg-config
+pg-handler/pg-config.js
+sodas-airbyte-handler/

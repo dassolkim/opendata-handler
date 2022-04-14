@@ -26,6 +26,8 @@ async function main(){
         connectionConfiguration: configInfo.connectDestination,
         workspaceId: configInfo.workspaceId,
         destinationDefinitionId: configInfo.destinationDefinitionId,
+        exist: true,
+        destinationId: "d2844648-3398-40e6-9bd6-43147d7c3bed",
         name: "createTest_destination"
     }
     const connectionInfo = {
@@ -61,7 +63,7 @@ async function main(){
         console.log(`Number of ${format} file in US portal catalog page 1: ${count}`)
         let i = 0
         while(i<count){
-            if(i%10 == 0){
+            if(i%1 == 0){
                 csvConnectSource.url = urlObj.url[i]
                 csvConnectSource.dataset_name = name + i
                 csvSourceInfo.name = name + i
@@ -69,7 +71,7 @@ async function main(){
                 const catalog = await validate.validate(csvSourceInfo)
                 console.log("######### CSV File to Postgres Migration Test #########")
                 console.log(`Validate results: ${catalog}`)
-                const connection = await create.create(csvSourceInfo, destinationInfo, connectionInfo, catalog)
+                const connection = await create.createCustom(csvSourceInfo, destinationInfo, connectionInfo, catalog)
                 if (connection == true){
                     console.log("distribution/create succeeded")
                 } else {

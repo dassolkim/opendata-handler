@@ -43,14 +43,14 @@ function distributionParser(catalog, format){
 
 function datasetParser(catalog){
     
-  //console.log(data)
-  const dataset = catalog['rdf:RDF']['dcat:Catalog']['dcat:dataset']
-  
-  //console.log(dist)
-  const count = dataset.length;
-  console.log(`Number of Datasets in Catalog: ${count}`)
+    //console.log(data)
+    const dataset = catalog['rdf:RDF']['dcat:Catalog']['dcat:dataset']
+    // const dataset = catalog['rdf:RDF']['dcat:Catalog']['dcat:dataset']['dcat:Dataset']['dcat:distribution']
+    //console.log(dist)
+    const count = dataset.length;
+    console.log(`Number of Datasets in Catalog: ${count}`)
 
-  return dataset
+    return dataset
 }
 
 function schemaParser(catalog){
