@@ -3,3 +3,5 @@ config/connectConfig.js
 airbyte-api-module/
 pg-handler/pg-config.js
 sodas-airbyte-handler/
+_sodas-airbyte-handler/
+table-discovery-odl/
