@@ -1,36 +1,36 @@
 const fs = require('fs')
 const dataDir = './data/'
 
-module.exports = {writeCatalog, readCatalog, writeUrls, readUrls}
+module.exports = { writeCatalog, readCatalog, writeUrls, readUrls, writeCols, readCols }
 
 function writeCatalog(data, sourceInfo) {
 
-    try{
+    try {
         const type = sourceInfo.type
         const dir = dataDir + type
         console.log(`directory path: ${dir}`)
         // const exist = fs.existsSync(dir)
         // console.log(exist)
         // if (!exist) fs.mkdirSync(dir)
-        
+
         const file = dir + '/' + sourceInfo.name + '.rdf'
         console.log(`file path: ${file}`)
         fs.writeFileSync(file, data)
-        if(fs.existsSync(file)){
+        if (fs.existsSync(file)) {
             return true
         } else {
             return false
         }
-        
-    } catch (err){
+
+    } catch (err) {
         console.log(err)
-    }   
+    }
 }
 
 
 function readCatalog(dataDir, sourceInfo) {
 
-    try{
+    try {
         const type = sourceInfo.type
         const dir = dataDir + type
         const exist = fs.existsSync(dir)
@@ -38,23 +38,23 @@ function readCatalog(dataDir, sourceInfo) {
         console.log(`directory path: ${dir}`)
         const file = dir + '/' + sourceInfo.name + '.rdf'
         console.log(`file path: ${file}`)
-        
-        if(fs.existsSync(file)){
+
+        if (fs.existsSync(file)) {
             const data = fs.readFileSync(file, 'utf-8')
-            console.log(typeof(data))
+            console.log(typeof (data))
             return data
         } else {
             return false
         }
-        
-    } catch (err){
+
+    } catch (err) {
         console.log(err)
-    }   
+    }
 }
 
 function writeUrls(data, sourceInfo) {
 
-    try{
+    try {
         const type = sourceInfo.type
         const dir = dataDir + type
         console.log(`directory path: ${dir}`)
@@ -67,19 +67,19 @@ function writeUrls(data, sourceInfo) {
             url: data
         }
         fs.writeFileSync(file, JSON.stringify(urls))
-        if(fs.existsSync(file)){
+        if (fs.existsSync(file)) {
             return true
         } else {
             return false
         }
-    } catch (err){
+    } catch (err) {
         console.log(err)
-    }   
+    }
 }
 
 function readUrls(dataDir, sourceInfo) {
 
-    try{
+    try {
         const type = sourceInfo.type
         const dir = dataDir + type
         const exist = fs.existsSync(dir)
@@ -87,16 +87,64 @@ function readUrls(dataDir, sourceInfo) {
         console.log(`directory path: ${dir}`)
         const file = dir + '/' + sourceInfo.name + '_url.txt'
         console.log(`file path: ${file}`)
-        
-        if(fs.existsSync(file)){
+
+        if (fs.existsSync(file)) {
             const data = fs.readFileSync(file, 'utf-8')
-            console.log(typeof(data))
+            console.log(typeof (data))
             return data
         } else {
             return false
         }
-        
-    } catch (err){
+
+    } catch (err) {
         console.log(err)
-    }   
+    }
+}
+
+function writeCols(data, sourceInfo) {
+
+    try {
+        const type = sourceInfo.type
+        const dir = sourceInfo.path + type
+        console.log(`directory path: ${dir}`)
+        const exist = fs.existsSync(dir)
+        console.log(exist)
+        const file = dir + '/' + sourceInfo.name + '_cols.txt'
+        console.log(`file path: ${file}`)
+        const cols = {
+            cols: data
+        }
+        fs.writeFileSync(file, JSON.stringify(cols))
+        if (fs.existsSync(file)) {
+            return true
+        } else {
+            return false
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+function readCols(dataDir, sourceInfo) {
+
+    try {
+        const type = sourceInfo.type
+        const dir = dataDir + type
+        const exist = fs.existsSync(dir)
+        console.log(exist)
+        console.log(`directory path: ${dir}`)
+        const file = dir + '/' + sourceInfo.name + '_cols.txt'
+        console.log(`file path: ${file}`)
+
+        if (fs.existsSync(file)) {
+            const data = fs.readFileSync(file, 'utf-8')
+            console.log(typeof (data))
+            return data
+        } else {
+            return false
+        }
+
+    } catch (err) {
+        console.log(err)
+    }
 }
