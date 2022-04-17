@@ -1,7 +1,7 @@
 const fs = require('fs')
 const dataDir = './data/'
 
-module.exports = { writeCatalog, readCatalog, writeUrls, readUrls, writeCols, readCols }
+module.exports = { writeCatalog, readCatalog, writeUrls, readUrls, writeCols, readCols, writeValues, readValues }
 
 function writeCatalog(data, sourceInfo) {
 
@@ -134,6 +134,52 @@ function readCols(dataDir, sourceInfo) {
         console.log(exist)
         console.log(`directory path: ${dir}`)
         const file = dir + '/' + sourceInfo.name + '_cols.txt'
+        console.log(`file path: ${file}`)
+
+        if (fs.existsSync(file)) {
+            const data = fs.readFileSync(file, 'utf-8')
+            console.log(typeof (data))
+            return data
+        } else {
+            return false
+        }
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+function writeValues(data, sourceInfo) {
+
+    try {
+        const type = sourceInfo.type
+        const dir = sourceInfo.path + type
+        console.log(`directory path: ${dir}`)
+        const exist = fs.existsSync(dir)
+        console.log(exist)
+        const file = dir + '/' + sourceInfo.name + '_values.txt'
+        console.log(`file path: ${file}`)
+
+        fs.writeFileSync(file, JSON.stringify(data))
+        if (fs.existsSync(file)) {
+            return true
+        } else {
+            return false
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+function readValues(dataDir, sourceInfo) {
+
+    try {
+        const type = sourceInfo.type
+        const dir = dataDir + type
+        const exist = fs.existsSync(dir)
+        console.log(exist)
+        console.log(`directory path: ${dir}`)
+        const file = dir + '/' + sourceInfo.name + '_values.txt'
         console.log(`file path: ${file}`)
 
         if (fs.existsSync(file)) {
