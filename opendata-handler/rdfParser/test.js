@@ -8,6 +8,7 @@ function test(){
     const format = 'JSON'
     const sourceInfo = {
         type: 'catalog',
+        publisher: 'US',
         name: 'us_catalog'
     }
     const catalog = rp.catalogParser(fh.readCatalog('./data/', sourceInfo))

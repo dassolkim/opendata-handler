@@ -1,19 +1,21 @@
 const fs = require('fs')
-const dataDir = './data/'
+const path = require('path')
+const dataDir = path.join('C:/Users/kimds/nodeProject', 'data/')
 
-module.exports = { writeCatalog, readCatalog, writeUrls, readUrls, writeCols, readCols, writeValues, readValues }
+module.exports = { writeCatalog, readCatalog, writeUrls, readUrls, writeCols, readCols, writeVals, readVals }
 
 function writeCatalog(data, sourceInfo) {
 
     try {
         const type = sourceInfo.type
-        const dir = dataDir + type
+        const publisher = sourceInfo.publisher
+        const dir = dataDir + type + '/' + publisher
         console.log(`directory path: ${dir}`)
         // const exist = fs.existsSync(dir)
         // console.log(exist)
         // if (!exist) fs.mkdirSync(dir)
 
-        const file = dir + '/' + sourceInfo.name + '.rdf'
+        const file = dir + '/' + 'p_' + sourceInfo.page + '_'+ sourceInfo.name + '.rdf'
         console.log(`file path: ${file}`)
         fs.writeFileSync(file, data)
         if (fs.existsSync(file)) {
@@ -32,7 +34,9 @@ function readCatalog(dataDir, sourceInfo) {
 
     try {
         const type = sourceInfo.type
-        const dir = dataDir + type
+        const publisher = sourceInfo.publisher
+        const dir = dataDir + type + '/' + publisher
+        // const dir = dataDir + type
         const exist = fs.existsSync(dir)
         console.log(exist)
         console.log(`directory path: ${dir}`)
@@ -56,11 +60,12 @@ function writeUrls(data, sourceInfo) {
 
     try {
         const type = sourceInfo.type
-        const dir = dataDir + type
+        const publisher = sourceInfo.publisher
+        const dir = dataDir + type + '/' + publisher
         console.log(`directory path: ${dir}`)
         const exist = fs.existsSync(dir)
         console.log(exist)
-        const file = dir + '/' + sourceInfo.name + '_url.txt'
+        const file = dir + '/' + 'p_' + sourceInfo.page + '_' + sourceInfo.format + '_' + sourceInfo.name + '_url.txt'
         console.log(`file path: ${file}`)
         const urls = {
             info: sourceInfo,
@@ -81,7 +86,9 @@ function readUrls(dataDir, sourceInfo) {
 
     try {
         const type = sourceInfo.type
-        const dir = dataDir + type
+        const publisher = sourceInfo.publisher
+        const dir = dataDir + type + '/' + publisher
+        // const dir = dataDir + type
         const exist = fs.existsSync(dir)
         console.log(exist)
         console.log(`directory path: ${dir}`)
@@ -105,7 +112,8 @@ function writeCols(data, sourceInfo) {
 
     try {
         const type = sourceInfo.type
-        const dir = sourceInfo.path + type
+        const publisher = sourceInfo.publisher
+        const dir = sourceInfo.path + type + publisher
         console.log(`directory path: ${dir}`)
         const exist = fs.existsSync(dir)
         console.log(exist)
@@ -129,7 +137,9 @@ function readCols(dataDir, sourceInfo) {
 
     try {
         const type = sourceInfo.type
-        const dir = dataDir + type
+        const publisher = sourceInfo.publisher
+        const dir = dataDir + type + '/' + publisher
+        // const dir = dataDir + type
         const exist = fs.existsSync(dir)
         console.log(exist)
         console.log(`directory path: ${dir}`)
@@ -149,11 +159,13 @@ function readCols(dataDir, sourceInfo) {
     }
 }
 
-function writeValues(data, sourceInfo) {
+function writeVals(data, sourceInfo) {
 
     try {
         const type = sourceInfo.type
-        const dir = sourceInfo.path + type
+        const publisher = sourceInfo.publisher
+        const dir = dataDir + type + '/' + publisher
+        // const dir = sourceInfo.path + type
         console.log(`directory path: ${dir}`)
         const exist = fs.existsSync(dir)
         console.log(exist)
@@ -171,11 +183,13 @@ function writeValues(data, sourceInfo) {
     }
 }
 
-function readValues(dataDir, sourceInfo) {
+function readVals(dataDir, sourceInfo) {
 
     try {
         const type = sourceInfo.type
-        const dir = dataDir + type
+        const publisher = sourceInfo.publisher
+        const dir = dataDir + type + '/' + publisher
+        // const dir = dataDir + type
         const exist = fs.existsSync(dir)
         console.log(exist)
         console.log(`directory path: ${dir}`)

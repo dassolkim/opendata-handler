@@ -2,24 +2,28 @@ const config = require('./config/openDataConfig')
 const dc = require('./opendata-handler/dataCollector/data-collector')
 const fh = require('./opendata-handler/fileHandler/file-handler')
 const rp = require('./opendata-handler/rdfParser/rdf-parser')
+const path = require('path')
+const defaultPath = path.join('C:/Users/kimds/nodeProject', 'data/')
 
 async function main(){
  
     const UKsourceInfo = {
         defaultUrl: config.UKdefaultUrl,
         type: 'catalog',
+        publisher: 'UK',
         name: 'uk_catalog'
     }
     const USsourceInfo = {
         defaultUrl: config.USdefaultUrl,
         type: 'catalog',
+        publisher: 'US',
         name: 'us_catalog'
     }
 
     /**
      * Get RDF Catalog Test
      */
-
+    
     const catalog = await dc.getCatalog(USsourceInfo)
     console.log(`######### Collect ${USsourceInfo.name} on Web (data portal) #########`)
     //console.log(`Get RDF contents: ${catalog}`)
@@ -34,16 +38,20 @@ async function main(){
     }
 
     // UK test file read
-    const dataDir = './data/'
+    const dataDir = defaultPath
     const format = 'CSV'
     const fileData = fh.readCatalog(dataDir, USsourceInfo)
     
     if(fileData == false){
-        console.log(`read data is filed`)
+        console.log(`read data is failed`)
     } else {
         const parseData = rp.catalogParser(fileData)
         const dataset = rp.datasetParser(parseData)
         const csv_urls = rp.distributionParser(parseData, format)
+        const schema = rp.schemaParser(catalog)
+        console.log(schema)
+        const nextPageUrl = schema.nextPage
+        const lastPage = schema.totalItem / 100
         //const dist = test['rdf:RDF']['dcat:Distribution']
         //console.log(JSON.stringify(dist, null, 2))
         const csv_count = csv_urls.length
