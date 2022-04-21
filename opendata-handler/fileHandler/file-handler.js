@@ -40,7 +40,7 @@ function readCatalog(dataDir, sourceInfo) {
         const exist = fs.existsSync(dir)
         console.log(exist)
         console.log(`directory path: ${dir}`)
-        const file = dir + '/' + sourceInfo.name + '.rdf'
+        const file = dir + '/' + 'p_' + sourceInfo.page + '_' + sourceInfo.name + '.rdf'
         console.log(`file path: ${file}`)
 
         if (fs.existsSync(file)) {
@@ -61,7 +61,7 @@ function writeUrls(data, sourceInfo) {
     try {
         const type = sourceInfo.type
         const publisher = sourceInfo.publisher
-        const dir = dataDir + type + '/' + publisher
+        const dir = dataDir + type + '/' + publisher + '/' + sourceInfo.format
         console.log(`directory path: ${dir}`)
         const exist = fs.existsSync(dir)
         console.log(exist)
