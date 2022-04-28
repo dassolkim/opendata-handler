@@ -1,7 +1,7 @@
-const configInfo = require('./config/connectConfig')
-const validate = require('./airbyte-api-module/distribution/validate/validate')
-const create = require('./airbyte-api-module/distribution/create/create')
-const fh = require('./opendata-handler/fileHandler/file-handler')
+const configInfo = require('../../config/connectConfig')
+const validate = require('../../airbyte-api-module/distribution/validate/validate')
+const create = require('../../airbyte-api-module/distribution/create/create')
+const fh = require('../fileHandler/file-handler')
 
 async function main(){
    
