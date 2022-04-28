@@ -6,4 +6,6 @@ sodas-airbyte-handler/
 _sodas-airbyte-handler/
 table-discovery-odl/
 data/catalog/US/
+data/catalog/CA/
 data/url/US/
+data/url/CA/
