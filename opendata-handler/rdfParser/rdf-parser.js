@@ -17,7 +17,9 @@ function catalogParser(data) {
 function distributionParser(catalog, format) {
 
     const data = catalog
-    const dist = data['rdf:RDF']['dcat:Distribution']
+    const dist = data['rdf:RDF']['dcat:Distribution'] // US & UK catalog
+    // const dist = data['rdf:RDF']['rdf:Description']  // CA catalog
+    
     if (dist) {
         const count = Object.keys(dist).length;
         console.log(`Number of Distribution in Catalog: ${count}`)
@@ -25,11 +27,15 @@ function distributionParser(catalog, format) {
         let j = 0
         let url_list = []
         while (i < count) {
-            if (dist[i]['dct:format'] == format) {
-                url_list[j] = dist[i]['dcat:accessURL']['@_rdf:resource']
-                j++
-            }
-            i++
+            const exist = dist[i]
+            if(exist != undefined){
+                if (dist[i]['dct:format'] == format) {
+                    url_list[j] = dist[i]['dcat:accessURL']['@_rdf:resource']
+                    j++
+                }
+                i++
+            } else {i++}
+            
         }
         return url_list
     } else { return false }
@@ -39,10 +45,13 @@ function distributionParser(catalog, format) {
 function datasetParser(catalog) {
 
     //console.log(data)
-    const dataset = catalog['rdf:RDF']['dcat:Catalog']['dcat:dataset']
+    const dataset = catalog['rdf:RDF']['dcat:Catalog']['dcat:dataset'] // US & UK catalog
+    
+    // const dataset = catalog['rdf:RDF']['rdf:Description'][0]['dcat:dataset']  // CA catalog
     // const dataset = catalog['rdf:RDF']['dcat:Catalog']['dcat:dataset']['dcat:Dataset']['dcat:distribution']
-    //console.log(dist)
-    const count = dataset.length;
+    // console.log(dataset)
+    
+    const count = dataset.length
     console.log(`Number of Datasets in Catalog: ${count}`)
 
     return dataset
