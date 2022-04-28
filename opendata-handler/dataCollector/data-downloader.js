@@ -1,4 +1,4 @@
-const config = require('../../config/openDataConfig')
+// const config = require('../../config/openDataConfig')
 const dc = require('./data-collector')
 const fh = require('../fileHandler/file-handler')
 const rp = require('../rdfParser/rdf-parser')
@@ -46,7 +46,8 @@ async function downloadAllUrls(sourceInfo, format, end){
         format: format.toLowerCase(),
         publisher: sourceInfo.publisher
     }
-    for (let page = 100; page < end; page++) {
+    let total_count = 0
+    for (let page = 1; page < end; page++) {
         sourceInfo.page = page
         const catalog = await fh.readCatalog(dataDir, sourceInfo)
 
@@ -54,8 +55,10 @@ async function downloadAllUrls(sourceInfo, format, end){
             console.log(`read data is failed`)
         } else {
             const parseData = await rp.catalogParser(catalog)
+            // console.log(parseData)
             const dataset = await rp.datasetParser(parseData)
-            const urls = rp.distributionParser(parseData, format)
+            const urls = await rp.distributionParser(parseData, format)
+            // console.log(urls)
             if (page == 1) {
                 const schema = rp.schemaParser(parseData)
                 console.log(schema)
@@ -65,7 +68,7 @@ async function downloadAllUrls(sourceInfo, format, end){
                 const dataset_count = dataset.length
                 console.log(`Number of datasets in catalog page ${page}: ${dataset_count}`)
                 console.log(`number of csv files in catalog page ${page}: ${count}`)
-
+                total_count += count
                 urlInfo.page = page
                 urlInfo.count = count
 
@@ -76,6 +79,8 @@ async function downloadAllUrls(sourceInfo, format, end){
             }
         }
     }
+    console.log(`total ${format.toLowerCase()} files in ${sourceInfo.publisher} open data portal: ${total_count}`)
+    return total_count
 }
 
 
