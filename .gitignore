@@ -7,5 +7,7 @@ _sodas-airbyte-handler/
 table-discovery-odl/
 data/catalog/US/
 data/catalog/CA/
+data/catalog/OK_dkan/
 data/url/US/
 data/url/CA/
+data/url/OK_dkan/

@@ -17,7 +17,7 @@ function catalogParser(data) {
 function distributionParser(catalog, format) {
 
     const data = catalog
-    const dist = data['rdf:RDF']['dcat:Distribution'] // US & UK catalog
+    const dist = data['rdf:RDF']['dcat:Distribution'] // US & UK catalog, DKAN (Oklahoma)
     // const dist = data['rdf:RDF']['rdf:Description']  // CA catalog
     
     if (dist) {
@@ -45,7 +45,7 @@ function distributionParser(catalog, format) {
 function datasetParser(catalog) {
 
     //console.log(data)
-    const dataset = catalog['rdf:RDF']['dcat:Catalog']['dcat:dataset'] // US & UK catalog
+    const dataset = catalog['rdf:RDF']['dcat:Catalog']['dcat:dataset'] // US & UK catalog, DKAN (Oklahoma)
     
     // const dataset = catalog['rdf:RDF']['rdf:Description'][0]['dcat:dataset']  // CA catalog
     // const dataset = catalog['rdf:RDF']['dcat:Catalog']['dcat:dataset']['dcat:Dataset']['dcat:distribution']
