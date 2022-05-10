@@ -20,11 +20,20 @@ async function main(){
         format: format.toLowerCase(),
         publisher: 'US'
     }
-    const CAend = 5
+
+    const OKurlInfo = {
+        name: 'ok_catalog',
+        type: 'url',
+        format: format.toLowerCase(),
+        publisher: 'OK_dkan'
+    }
+    const CAend = 7
     const USend = 3435
+    const OKend = 5
     let total_count = 0
-    const urlInfo = CAurlInfo
-    for (let page = 1; page <= CAend; page++) {
+    const urlInfo = OKurlInfo
+    const end = OKend
+    for (let page = 1; page <= end; page++) {
         urlInfo.page = page
         const urls = await fh.readUrls(dataDir, urlInfo)
 
@@ -37,7 +46,7 @@ async function main(){
             
         }
     }
-    console.log(`total ${format.toLowerCase()} files in ${urlInfo.publisher} open data portal page 1-5: ${total_count}`)
+    console.log(`total ${format.toLowerCase()} files in ${urlInfo.publisher} open data portal page 1-${end}: ${total_count}`)
 
 }
 
