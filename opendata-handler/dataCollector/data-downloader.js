@@ -20,19 +20,33 @@ async function downloadAllCatalog(sourceInfo, end) {
      * Get all of US Catalog
      * US end: < 3436
      */
-
-    for (let page = 1; page < end; page++) {
-        const catalog = await dc.getNextCatalog(sourceInfo, page)
-        console.log(`######### Collect ${sourceInfo.name}, page ${page} on Web (data portal) #########`)
-        sourceInfo.page = page
-        const file = await fh.writeCatalog(catalog, sourceInfo)
-        // console.log(file)
+    if (sourceInfo.publisher == "Socrata"){
+        const catalog = await dc.getSocrata(sourceInfo)
+        console.log(`######### Collect ${sourceInfo.name}, page ${end} on Web (data portal) #########`)
+        sourceInfo.page = end
+        const dump = JSON.stringify(catalog)
+        console.log(dump)
+        
+        const file = await fh.writeCatalog(dump, sourceInfo)
         if (file) {
-            console.log(`collecting and storing ${sourceInfo.name} page ${page} file is succeeded`)
+            console.log(`collecting and storing ${sourceInfo.name} file is succeeded`)
         } else {
             console.log('storing file is failed')
         }
 
+    } else {
+        for (let page = 1; page < end; page++) {
+            const catalog = await dc.getNextCatalog(sourceInfo, page)
+            console.log(`######### Collect ${sourceInfo.name}, page ${page} on Web (data portal) #########`)
+            sourceInfo.page = page
+            const file = await fh.writeCatalog(catalog, sourceInfo)
+            // console.log(file)
+            if (file) {
+                console.log(`collecting and storing ${sourceInfo.name} page ${page} file is succeeded`)
+            } else {
+                console.log('storing file is failed')
+            }
+        }
     }
 }
 
@@ -82,5 +96,6 @@ async function downloadAllUrls(sourceInfo, format, end){
     console.log(`total ${format.toLowerCase()} files in ${sourceInfo.publisher} open data portal: ${total_count}`)
     return total_count
 }
+
 
 

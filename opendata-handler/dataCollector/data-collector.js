@@ -1,7 +1,7 @@
 const axios = require('axios').default
 
 // shared api
-module.exports = { getCatalog, getNextCatalog, getDataset }
+module.exports = { getCatalog, getNextCatalog, getDataset, getSocrata }
 
 function getCatalog(sourceInfo) {
   
@@ -34,10 +34,26 @@ function getDataset(sourceInfo) {
 }
 
 function getNextCatalog(sourceInfo, page) {
-
+    
     const url = sourceInfo.defaultUrl + "catalog.rdf?page=" + page
+    
 
     const result = axios.post(url)
+        .then(function (response) {
+            const data = response.data
+            return data
+
+        }).catch(function (error) {
+            console.log(error)
+        })
+    return result
+}
+
+function getSocrata(sourceInfo) {
+  
+    const url = sourceInfo.defaultUrl + "data.json"
+
+    const result = axios.get(url)
         .then(function (response) {
             const data = response.data
             return data

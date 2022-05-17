@@ -14,7 +14,7 @@ function writeCatalog(data, sourceInfo) {
         const exist = fs.existsSync(dir)
         // console.log(exist)
         if (!exist) fs.mkdirSync(dir)
-
+        
         const file = dir + '/' + 'p_' + sourceInfo.page + '_'+ sourceInfo.name + '.rdf'
         console.log(`file path: ${file}`)
         fs.writeFileSync(file, data)
