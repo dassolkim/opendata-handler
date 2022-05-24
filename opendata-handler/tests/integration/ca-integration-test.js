@@ -29,7 +29,10 @@ async function main(){
         workspaceId: configInfo.workspaceId,
         destinationDefinitionId: configInfo.destinationDefinitionId,
         exist: true,
-        destinationId: "5a4284a6-49ca-4c3e-b43b-3060d3cebb8b" // CA_destination ID
+        destinationId: "c1adcb5b-7283-4abe-ae8c-99905702a5dc"
+        // CA_destination ID page 1-3: 5a4284a6-49ca-4c3e-b43b-3060d3cebb8b
+        // CA page 4-5: 8ebaf4b0-8031-4839-838d-d52d0e6f6efd
+        // CA page 6-7: c1adcb5b-7283-4abe-ae8c-99905702a5dc
         // name: "createTest_destination"
     }
     const connectionInfo = {
@@ -49,10 +52,10 @@ async function main(){
         // read urls in file
         const dataDir = defaultPath
         const format = 'csv'
-        const publisher = 'CA'
-        const page = 3
+        const publisher = 'OK_dkan'
+        const page = 6
         const urlInfo = {
-            name: 'ca_catalog',
+            name: 'ok_catalog',
             type: 'url',
             format: format,
             publisher: publisher,
@@ -71,18 +74,20 @@ async function main(){
         let i = 1
         while(i<=count){
             if(i%1 == 0){
-                csvConnectSource.url = urlObj.url[i]
-                csvConnectSource.dataset_name = name + i
-                csvSourceInfo.name = name + i
-
-                // const catalog = await validate.validate(csvSourceInfo)
-                // console.log("######### CSV File to Postgres Migration Test #########")
-                // console.log(`Validate results: ${catalog}`)
-                const connection = await create.create(csvSourceInfo, destinationInfo, connectionInfo)
-                if (connection == true){
-                    console.log("distribution/create succeeded")
-                } else {
-                    console.log("distribution/create failed")
+                const url = urlObj.url[i]
+                if (url.includes('.zip') != true){
+                    csvConnectSource.url = url
+                    csvConnectSource.dataset_name = name + i
+                    csvSourceInfo.name = name + i
+                    // const catalog = await validate.validate(csvSourceInfo)
+                    // console.log("######### CSV File to Postgres Migration Test #########")
+                    // console.log(`Validate results: ${catalog}`)
+                    const connection = await create.create(csvSourceInfo, destinationInfo, connectionInfo)
+                    if (connection == true){
+                        console.log("distribution/create succeeded")
+                    } else {
+                        console.log("distribution/create failed")
+                    }
                 }
             }
             i++
