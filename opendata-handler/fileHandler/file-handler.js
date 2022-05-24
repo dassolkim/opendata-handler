@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const dataDir = path.join('C:/Users/kimds/nodeProject', 'data/')
 
-module.exports = { writeCatalog, readCatalog, writeUrls, readUrls, writeCols, readCols, writeVals, readVals }
+module.exports = { writeCatalog, readCatalog, writeUrls, readUrls, writeCols, readCols, writeVals, readVals, writeSourceIds, readSourceIds }
 
 function writeCatalog(data, sourceInfo) {
 
@@ -206,6 +206,60 @@ function readVals(dataDir, sourceInfo) {
         if (fs.existsSync(file)) {
             const data = fs.readFileSync(file, 'utf-8')
             console.log(typeof (data))
+            return data
+        } else {
+            return false
+        }
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+function writeSourceIds(data, sourceInfo) {
+
+    try {
+        const type = sourceInfo.type
+        const publisher = sourceInfo.publisher
+        const dir = dataDir + type + '/' + publisher + '/' + sourceInfo.format + '/sourceList'
+        // console.log(`directory path: ${dir}`)
+        const exist = fs.existsSync(dir)
+        if (!exist) fs.mkdirSync(dir)
+        // console.log(exist)
+        const file = dir + '/' + 'p_' + sourceInfo.page + '_' + sourceInfo.format + '_' + sourceInfo.name + '_sourceList.txt'
+        console.log(`file path: ${file}`)
+        const sources = {
+            info: sourceInfo,
+            sourceList: data
+        }
+        fs.writeFileSync(file, JSON.stringify(sources))
+        if (fs.existsSync(file)) {
+            return true
+        } else {
+            return false
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+function readSourceIds(dataDir, sourceInfo) {
+
+    try {
+        const type = sourceInfo.type
+        const publisher = sourceInfo.publisher
+        const dir = dataDir + type + '/' + publisher + '/' + sourceInfo.format + '/sourceList'
+        // const dir = dataDir + type
+        const exist = fs.existsSync(dir)
+        if (!exist) fs.mkdirSync(dir)
+        // console.log(exist)
+        // console.log(`directory path: ${dir}`)
+        const file = dir + '/' + 'p_' + sourceInfo.page + '_' + sourceInfo.format + '_' + sourceInfo.name + '_sourceList.txt'
+        console.log(`file path: ${file}`)
+
+        if (fs.existsSync(file)) {
+            const data = fs.readFileSync(file, 'utf-8')
+            // console.log(typeof (data))
             return data
         } else {
             return false
