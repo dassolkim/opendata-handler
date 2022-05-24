@@ -68,6 +68,7 @@ async function main() {
             }
             i++
         }
+        urlInfo.count = i - 1
         const writeSource = fh.writeSourceIds(sourceList, urlInfo)
         console.log(writeSource)
 
