@@ -1,6 +1,6 @@
 const { XMLParser, XMLBuilder, XMLValidator } = require('fast-xml-parser')
 
-module.exports = { catalogParser, distributionParser, datasetParser, schemaParser }
+module.exports = { catalogParser, distributionParser, datasetParser, schemaParser, socrataDatasetParser }
 
 
 function catalogParser(data) {
@@ -73,4 +73,18 @@ function schemaParser(catalog) {
     }
 
     return results
+}
+
+function socrataDatasetParser(catalog) {
+
+    const dataset = catalog.dataset
+    const dataset_count = dataset.length
+    // console.log(dataset_count)
+    let dist_list = []
+ 
+    for (let nd = 0; nd < dataset_count; nd++) {
+        dist_list[nd] = dataset[nd]['distribution']
+    }
+
+    return dist_list
 }
