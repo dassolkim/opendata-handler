@@ -7,7 +7,6 @@ const defaultPath = path.join('C:/Users/kimds/nodeProject', 'data/')
 
 async function main() {
 
-
     /**
      * dstribution/create test
      */
@@ -24,28 +23,31 @@ async function main() {
         publisher: publisher,
         page: page
     }
-    const sourceInfo = {
-        defulatUrl: configInfo.defaultUrl
-    }
-    const name = `ny_p${page}_csv_`
+
+    // const sourceInfo = { defulatUrl: configInfo.defaultUrl }
     // distribution name extraction
     const rSources = fh.readSourceIds(dataDir, urlInfo)
     const sourceObj = JSON.parse(rSources)
     const count = sourceObj.info.count
     console.log(`Number of ${format} file in ${publisher} portal catalog page ${urlInfo.page}: ${count}`)
-    let i = 1
-    
-    while (i <= count) {
+
+    let i = 0
+    while (i < count) {
         const source = sourceObj.sourceList[i]
-        console.log(source)
-        const removeResult = await remove.removeSource(sourceInfo, source)
-        if (removeResult == true) {
-            console.log("odlSource/reset succeeded")
-        } else {
-            console.log("odlSource/reset failed")
+        if (source != undefined) {
+            console.log(source)
+            // console.log(sourceInfo)
+            const removeResult = await remove.removeSource(configInfo.defaultUrl, source)
+            if (removeResult == true) {
+                console.log("odlSource/reset succeeded")
+            } else {
+                console.log("odlSource/reset failed")
+            }
         }
         i++
     }
+    fh.removeSourceList(dataDir, urlInfo)
+
 }
 if (require.main == module) {
     main()

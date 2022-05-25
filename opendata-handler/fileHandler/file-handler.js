@@ -2,7 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const dataDir = path.join('C:/Users/kimds/nodeProject', 'data/')
 
-module.exports = { writeCatalog, readCatalog, writeUrls, readUrls, writeCols, readCols, writeVals, readVals, writeSourceIds, readSourceIds }
+module.exports = { writeCatalog, readCatalog, writeUrls, readUrls, writeCols,
+    readCols, writeVals, readVals, writeSourceIds, readSourceIds, removeSourceList }
 
 function writeCatalog(data, sourceInfo) {
 
@@ -260,6 +261,26 @@ function readSourceIds(dataDir, sourceInfo) {
         if (fs.existsSync(file)) {
             const data = fs.readFileSync(file, 'utf-8')
             // console.log(typeof (data))
+            return data
+        } else {
+            return false
+        }
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+function removeSourceList(dataDir, sourceInfo) {
+
+    try {
+        const type = sourceInfo.type
+        const publisher = sourceInfo.publisher
+        const dir = dataDir + type + '/' + publisher + '/' + sourceInfo.format + '/sourceList'
+        const file = dir + '/' + 'p_' + sourceInfo.page + '_' + sourceInfo.format + '_' + sourceInfo.name + '_sourceList.txt'
+    
+        if (fs.existsSync(file)) {
+            const data = fs.unlinkSync(file)
             return data
         } else {
             return false
