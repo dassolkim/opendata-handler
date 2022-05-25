@@ -1,4 +1,4 @@
-const fh = require('../fileHandler/file-handler')
+const fh = require('../../fileHandler/file-handler')
 const path = require('path')
 const { url } = require('inspector')
 const defaultPath = path.join('C:/Users/kimds/nodeProject', 'data/')
@@ -27,12 +27,21 @@ async function main(){
         format: format.toLowerCase(),
         publisher: 'OK_dkan'
     }
+
+    const NYurlInfo = {
+        name: 'ny_catalog',
+        type: 'url',
+        format: format.toLowerCase(),
+        publisher: 'Socrata'
+    }
+
     const CAend = 7
     const USend = 3435
     const OKend = 5
+    const NYend = 1
     let total_count = 0
-    const urlInfo = OKurlInfo
-    const end = OKend
+    const urlInfo = NYurlInfo
+    const end = NYend
     for (let page = 1; page <= end; page++) {
         urlInfo.page = page
         const urls = await fh.readUrls(dataDir, urlInfo)
