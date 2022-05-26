@@ -67,10 +67,9 @@ async function main() {
 
     let i = 0
     while (i < count) {
-
         const source = sourceList.sourceList[i]
         if (i == 88) {
-            i++
+            continue
         } else {
             csvConnectSource.dataset_name = name + (i + 1)
             csvSourceInfo.name = name + (i + 1)
@@ -82,8 +81,8 @@ async function main() {
             } else {
                 console.log("distribution/create failed")
             }
-            i++
         }
+        i++
     }
 }
 if (require.main == module) {
