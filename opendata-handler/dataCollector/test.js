@@ -1,9 +1,7 @@
 const config = require('../../config/openDataConfig')
 const dd = require('./data-downloader')
-const fd = require('../fileHandler/file-handler')
 const path = require('path')
 const dataDir = path.join('C:/Users/kimds/nodeProject', 'data/')
-const rp = require('../rdfParser/rdf-parser')
 
 async function ustest(){
     const USsourceInfo = {
@@ -20,7 +18,10 @@ async function ustest(){
     console.log(catalog)
     
     // downloader test
-    const url = await dd.downloadAllUrls(USsourceInfo, 'CSV', 3436)
+    // add JSON extraction
+    // const url = await dd.downloadAllUrls(USsourceInfo, 'CSV', 3436)
+    const url = await dd.downloadAllUrls(USsourceInfo, 'JSON', 3436)
+
     return url
 }
 
@@ -101,13 +102,15 @@ async function socrata_test(){
     /**
      * Get RDF Catalog Test
      */
-    console.log(`######### Collect ${NYsourceInfo.name} on Web (data portal) #########`)
-    const catalog = await dd.downloadAllCatalog(NYsourceInfo, 1)
-    console.log(catalog)
+    // console.log(`######### Collect ${NYsourceInfo.name} on Web (data portal) #########`)
+    // const catalog = await dd.downloadAllCatalog(NYsourceInfo, 1)
+    // console.log(catalog)
     
     // downloader test
     console.log(`######### Collect ${NYsourceInfo.name} on Web (data portal) #########`)
-    const url = await dd.downloadSocrataDataset(NYsourceInfo, 'CSV', 1)
+    const url = await dd.downloadSocrataDataset(NYsourceInfo, 'JSON', 1)
+    // const url = await dd.downloadSocrataDataset(NYsourceInfo, 'CSV', 1)
+
     return url
 }
 socrata_test()

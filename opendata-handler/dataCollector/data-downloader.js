@@ -125,7 +125,7 @@ async function downloadSocrataDataset(sourceInfo, format, page) {
         let socrata_format
         // let dist
         if (format == 'CSV') socrata_format = 'text/csv'
-
+        if (format == 'JSON') socrata_format = 'application/json'
         let k = 0
         while (k < dataset_count) {
             const di = dist_list[k]
@@ -146,7 +146,7 @@ async function downloadSocrataDataset(sourceInfo, format, page) {
         if (url_list) {
             const count = url_list.length
             console.log(`Number of datasets in socrata catalog: ${dataset_count}`)
-            console.log(`number of csv files in socrata catalog: ${count}`)
+            console.log(`number of ${format} files in socrata catalog: ${count}`)
             urlInfo.count = count
             urlInfo.page = page
             total_count = count
@@ -157,6 +157,6 @@ async function downloadSocrataDataset(sourceInfo, format, page) {
             }
         }
     }
-    console.log(`total ${format.toLowerCase()} files in ${sourceInfo.publisher} open data portal: ${total_count}`)
+    console.log(`total ${format} files in ${sourceInfo.publisher} open data portal: ${total_count}`)
     return total_count
 }
