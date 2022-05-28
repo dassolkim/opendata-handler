@@ -1,7 +1,7 @@
-const config = require('../../config/openDataConfig')
-const dc = require('../dataCollector/data-collector')
-const fh = require('../fileHandler/file-handler')
-const rp = require('../rdfParser/rdf-parser')
+const config = require('../../../config/openDataConfig')
+const dc = require('../../dataCollector/data-collector')
+const fh = require('../../fileHandler/file-handler')
+const rp = require('../../rdfParser/rdf-parser')
 const path = require('path')
 const defaultPath = path.join('C:/Users/kimds/nodeProject', 'data/')
 
