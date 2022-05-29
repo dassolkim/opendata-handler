@@ -1,5 +1,4 @@
 const configInfo = require('../../../config/connectConfig')
-const validate = require('../../../airbyte-api-module/distribution/validate/validate')
 const create = require('../../../airbyte-api-module/distribution/create/odl')
 const fh = require('../../fileHandler/file-handler')
 const path = require('path')
@@ -52,10 +51,10 @@ async function main() {
         // read urls in file
         const dataDir = defaultPath
         const format = 'csv'
-        const publisher = 'OK_dkan'
+        const publisher = 'CA'
         const page = 6
         const urlInfo = {
-            name: 'ok_catalog',
+            name: 'ca_catalog',
             type: 'url',
             format: format,
             publisher: publisher,

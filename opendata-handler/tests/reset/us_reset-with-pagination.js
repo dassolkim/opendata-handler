@@ -23,7 +23,7 @@ async function main() {
         page: page
     }
     // distribution name extraction
-    const lastPage = 103
+    const lastPage = 3435
     let p = page
     while (p <= lastPage) {
         urlInfo.page = p
