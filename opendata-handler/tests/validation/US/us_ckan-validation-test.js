@@ -1,7 +1,7 @@
-const configInfo = require('../../../config/connectConfig')
-const validate = require('../../../airbyte-api-module/distribution/validate/odl')
+const configInfo = require('../../../../config/connectConfig')
+const validate = require('../../../../airbyte-api-module/distribution/validate/odl')
 
-const fh = require('../../fileHandler/file-handler')
+const fh = require('../../../fileHandler/file-handler')
 const path = require('path')
 const defaultPath = path.join('C:/Users/kimds/nodeProject', 'data/')
 
