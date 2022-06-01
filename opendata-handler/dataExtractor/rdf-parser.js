@@ -30,8 +30,10 @@ function distributionParser(catalog, format) {
             const exist = dist[i]
             if(exist != undefined){
                 if (dist[i]['dct:format'] == format) {
-                    url_list[j] = dist[i]['dcat:accessURL']['@_rdf:resource']
-                    j++
+                    if (dist[i]['dcat:accessURL']){
+                        url_list[j] = dist[i]['dcat:accessURL']['@_rdf:resource']
+                        j++
+                    }
                 }
                 i++
             } else {i++}

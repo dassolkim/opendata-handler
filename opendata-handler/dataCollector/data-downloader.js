@@ -1,9 +1,9 @@
 // const config = require('../../config/openDataConfig')
 const dc = require('./data-collector')
 const fh = require('../fileHandler/file-handler')
-const rp = require('../rdfParser/rdf-parser')
+const rp = require('../dataExtractor/rdf-parser')
 const path = require('path')
-const { count } = require('console')
+// const { count } = require('console')
 const defaultPath = path.join('C:/Users/kimds/nodeProject', 'data/')
 
 
@@ -37,7 +37,7 @@ async function downloadAllCatalog(sourceInfo, end) {
         }
 
     } else {
-        for (let page = 1; page < end; page++) {
+        for (let page = 1; page <= end; page++) {
             const catalog = await dc.getNextCatalog(sourceInfo, page)
             console.log(`######### Collect ${sourceInfo.name}, page ${page} on Web (data portal) #########`)
             sourceInfo.page = page
@@ -66,7 +66,6 @@ async function downloadAllUrls(sourceInfo, format, end) {
     for (let page = 1; page < end; page++) {
         sourceInfo.page = page
         const catalog = await fh.readCatalog(dataDir, sourceInfo)
-
         if (!catalog) {
             console.log(`read data is failed`)
         } else {

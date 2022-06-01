@@ -1,7 +1,7 @@
 const config = require('../../config/openDataConfig')
 const dd = require('./data-downloader')
 const path = require('path')
-const dataDir = path.join('C:/Users/kimds/nodeProject', 'data/')
+// const dataDir = path.join('C:/Users/kimds/nodeProject', 'data/')
 
 async function ustest(){
     const USsourceInfo = {
@@ -60,14 +60,15 @@ async function uktest(){
      * Get RDF Catalog Test
      */
     console.log(`######### Collect ${UKsourceInfo.name} on Web (data portal) #########`)
-    const catalog = await dd.downloadAllCatalog(UKsourceInfo, 320)
-    // console.log(catalog)
+    const catalog = await dd.downloadAllCatalog(UKsourceInfo, 521)
+    console.log(catalog)
     
     // downloader test
     console.log(`######### Collect ${UKsourceInfo.name} on Web (data portal) #########`)
-    const url = await dd.downloadAllUrls(UKsourceInfo, 'CSV', 320)
+    const url = await dd.downloadAllUrls(UKsourceInfo, 'CSV', 521)
     return url
 }
+uktest()
 
 async function dkan_test(){
     const OKsourceInfo = {
@@ -113,4 +114,4 @@ async function socrata_test(){
 
     return url
 }
-socrata_test()
+// socrata_test()
