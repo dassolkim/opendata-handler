@@ -1,6 +1,5 @@
 const configInfo = require('../../../../config/connectConfig')
 const validate = require('../../../../airbyte-api-module/distribution/validate/odl')
-const extractor = require('../../../dataExtractor/random-sampling')
 const fh = require('../../../fileHandler/file-handler')
 const path = require('path')
 const defaultPath = path.join('C:/Users/kimds/nodeProject', 'data/')
@@ -28,14 +27,21 @@ async function main() {
         page: page
     }
 
-    console.time(`Time check for ${publisher} portal validation with check_connection`)
-    let p = page
+    let p = 0
     let global_cnt = 0
     let global_fcnt = 0
-    // const pg_list = [3301, 978, 2887, 1013]
-    while (p <= lastPage) {
-        urlInfo.page = p
-        const rSources = fh.readSourceIds(dataDir, urlInfo)
+
+    urlInfo.dirType = 100
+    const f_list = fh.readDirs(dataDir, urlInfo)
+    const length = f_list.length
+ 
+    console.time(`Time check for ${publisher} portal validation with check_connection`)
+
+    while (p < length) {
+        // urlInfo.page = p
+        // const rSources = fh.readSourceIds(dataDir, urlInfo)
+        const rSources = fh.readIdFile(dataDir, urlInfo, f_list[p])
+
         if (rSources == false) {
             // continue
             console.log(`${p} catalogs does not contain ${format} files`)

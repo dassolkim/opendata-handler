@@ -45,9 +45,9 @@ async function main() {
     // const rp = extractor.randomSamplingWithLimit(lastPage, dataDir, urlInfo, 500)
     // const rp = extractor.randomSamplingWithLimit(lastPage, dataDir, urlInfo, 100)
     // const rp = extractor.randomSampling(lastPage, dataDir, urlInfo)
-    const rp = extractor.randomSamplingWithLimit(lastPage, dataDir, urlInfo, 2000)
+    // const rp = extractor.randomSamplingWithLimit(lastPage, dataDir, urlInfo, 100)
 
-
+    const rp = extractor.randomSamplingWithFairness(lastPage, dataDir, urlInfo, 1000)
     const rp_len = rp.length
     console.log(rp)
     console.log(rp_len)
@@ -93,6 +93,7 @@ async function main() {
         urlInfo.count = cnt
         global_cnt += cnt
         urlInfo.dataType = 'source'
+        urlInfo.dirType = 100
         const writeSource = fh.writeSourceIds(sourceList, urlInfo)
         console.log(`create and validate for ODL data service activity`)
         console.log(`number of created sources in ${publisher}: ${cnt}`)

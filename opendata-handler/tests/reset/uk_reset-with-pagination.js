@@ -24,11 +24,18 @@ async function main() {
     }
     // distribution name extraction
     const lastPage = 521
-    let p = page
+    let p = 0
     let global_cnt = 0
-    while (p <= lastPage) {
-        urlInfo.page = p
-        const rSources = fh.readSourceIds(dataDir, urlInfo)
+    urlInfo.dirType = 100
+    const f_list = fh.readDirs(dataDir, urlInfo)
+    console.log(f_list)
+    const length = f_list.length
+    console.log(length)
+
+    while (p < length) {
+        // urlInfo.page = p
+        // const rSources = fh.readSourceIds(dataDir, urlInfo)
+        const rSources = fh.readIdFile(dataDir, urlInfo, f_list[p])
         if (rSources == false) {
             console.log(`${p} catalogs does not contain ${format} files`)
         } else {
@@ -39,23 +46,23 @@ async function main() {
             let i = 0
             let cnt = 0
             console.time('Time check for US portal validation')
-            while (i < count) {
-                const source = sourceObj.sourceList[i]
-                if (source != undefined) {
-                    // console.log(source)
-                    const removeResult = await remove.removeSource(configInfo.defaultUrl, source)
-                    if (removeResult == true) {
-                        cnt++
-                        console.log("odlSource/reset succeeded")
-                    } else {
-                        console.log("odlSource/reset failed")
-                    }
-                }
-                i++
-            }
+            // while (i < count) {
+            //     const source = sourceObj.sourceList[i]
+            //     if (source != undefined) {
+            //         // console.log(source)
+            //         const removeResult = await remove.removeSource(configInfo.defaultUrl, source)
+            //         if (removeResult == true) {
+            //             cnt++
+            //             console.log("odlSource/reset succeeded")
+            //         } else {
+            //             console.log("odlSource/reset failed")
+            //         }
+            //     }
+            //     i++
+            // }
             global_cnt += cnt
             console.timeEnd('Time check for US portal validation')
-            fh.removeSourceList(dataDir, urlInfo)
+            fh.removeIdFiles(dataDir, urlInfo, f_list[p])
             console.log(`reset ${publisher} workspace, #of deleted sources: ${cnt}`)
         }
         p++
