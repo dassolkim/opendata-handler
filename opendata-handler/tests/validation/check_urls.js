@@ -35,13 +35,21 @@ async function main(){
         publisher: 'Socrata'
     }
 
-    const CAend = 7
+    const UKurlInfo = {
+        name: 'uk_catalog',
+        type: 'url',
+        format: format.toLowerCase(),
+        publisher: 'UK'
+    }
+
+    const CAend = 319
     const USend = 3435
     const OKend = 5
     const NYend = 1
+    const UKend = 520
     let total_count = 0
-    const urlInfo = NYurlInfo
-    const end = NYend
+    const urlInfo = UKurlInfo
+    const end = UKend
     for (let page = 1; page <= end; page++) {
         urlInfo.page = page
         const urls = await fh.readUrls(dataDir, urlInfo)

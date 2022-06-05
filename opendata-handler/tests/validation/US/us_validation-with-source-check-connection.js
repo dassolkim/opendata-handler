@@ -31,10 +31,13 @@ async function main() {
     console.time(`Time check for ${publisher} portal validation with check_connection`)
     let p = page
     let global_cnt = 0
+    let global_fcnt = 0
+    const pg_list = [3301, 978, 2887, 1013]
     while (p <= lastPage) {
         urlInfo.page = p
         const rSources = fh.readSourceIds(dataDir, urlInfo)
         if (rSources == false) {
+            // continue
             console.log(`${p} catalogs does not contain ${format} files`)
         } else {
             const sourceObj = JSON.parse(rSources)
@@ -43,6 +46,7 @@ async function main() {
 
             let i = 0
             let cnt = 0
+            let fcnt = 0
             // console.time('Time check for US portal validation')
             while (i < count) {
                 const source = sourceObj.sourceList[i]
@@ -55,17 +59,20 @@ async function main() {
                         cnt++
                         console.log("odlSource/check_connection succeeded")
                     } else {
+                        fcnt++
                         console.log("odlSource/check_connection failed")
                     }
                 }
                 i++
             }
             global_cnt += cnt
+            global_fcnt += fcnt
             console.log(`check connection for ${publisher} workspace, #of connected sources: ${cnt}`)
         }
         p++
     }
     console.log(`Number of total connected sources: ${global_cnt}`)
+    console.log(`Number of total failed connection sources: ${global_fcnt}`)
     console.timeEnd(`Time check for ${publisher} portal validation with check_connection`)
 }
 if (require.main == module) {

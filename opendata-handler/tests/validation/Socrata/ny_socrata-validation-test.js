@@ -67,6 +67,7 @@ async function main() {
     }
     urlInfo.count = i
     urlInfo.type = 'source'
+    urlInfo.dirType = 2000
     const writeSource = fh.writeSourceIds(sourceList, urlInfo)
     console.log(writeSource)
 }

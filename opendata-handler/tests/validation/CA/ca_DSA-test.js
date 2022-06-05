@@ -42,11 +42,10 @@ async function main() {
         page: page
     }
 
-    // const rp = extractor.randomSamplingWithLimit(lastPage, dataDir, urlInfo, 500)
-    const rp = extractor.randomSampling(lastPage, dataDir, urlInfo)
+    const rp = extractor.randomSamplingWithLimit(lastPage, dataDir, urlInfo, 500)
+    // // const rp = extractor.randomSampling(lastPage, dataDir, urlInfo)
+
     const rp_len = rp.length
-    console.log(rp)
-    console.log(rp_len)
 
     console.time(`Time check for ${publisher} portal validation with random pagenation`)
     let global_cnt = 0
@@ -65,7 +64,6 @@ async function main() {
         let j = 0
         let cnt = 0
         const sourceList = []
-        // console.time('Time check for US portal validation')
         original_cnt += count
         while (i < count) {
             const url = urlObj.url[i]
@@ -80,11 +78,9 @@ async function main() {
             } else {
                 sourceList.push(sourceId)
                 cnt++
-                // console.log("odlSource/validation succeeded")
             }
             i++
         }
-        // console.timeEnd('Time check for US portal validation')
 
         urlInfo.count = cnt
         global_cnt += cnt
@@ -97,8 +93,6 @@ async function main() {
     console.timeEnd(`Time check for ${publisher} portal validation with random pagenation`)
     console.log(`Number of ${format} files in ${publisher} portal: ${original_cnt}`)
     console.log(`Number of created sources in ${publisher} portal ${format} files: ${global_cnt}`)
-
-    // console.log(`(${global_cnt}/${original_cnt}) * 100 %`)
 
 }
 if (require.main == module) {

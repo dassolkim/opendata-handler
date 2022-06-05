@@ -1,0 +1,61 @@
+const configInfo = require('../../../config/connectConfig')
+const remove = require('../../../airbyte-api-module/distribution/remove/odl')
+
+const fh = require('../../fileHandler/file-handler')
+const path = require('path')
+const defaultPath = path.join('C:/Users/kimds/nodeProject', 'data/')
+
+async function main() {
+
+    /**
+     * odl-source/validation logic
+     */
+    // read urls in file
+    const dataDir = defaultPath
+    const format = 'csv'
+    const publisher = 'US'
+    const page = 1
+    const urlInfo = {
+        name: 'us_catalog',
+        type: 'url',
+        format: format,
+        publisher: publisher,
+        page: page
+    }
+    // distribution name extraction
+    
+    const rSources = fh.readSourceIds(dataDir, urlInfo)
+    
+    let str = rSources.split(/\r?\n/)
+    const sourceStr = JSON.stringify(str)
+    const sourceObj = JSON.parse(sourceStr)
+    // console.log(sourceObj[0])
+    const count = 436
+    console.log(`Number of ${format} file in ${publisher} portal catalog page ${urlInfo.page}: ${count}`)
+
+    let i = 0
+    let cnt = 0
+    // const sourceObj = str
+    console.time('Time check for US portal validation')
+    while (i < count) {
+        const source = sourceObj[i]
+        console.log(source)
+        if (source != undefined) {
+            // console.log(source)
+            const removeResult = await remove.removeSource(configInfo.defaultUrl, source)
+            if (removeResult == true) {
+                cnt++
+                console.log("odlSource/reset succeeded")
+            } else {
+                console.log("odlSource/reset failed")
+            }
+        }
+        i++
+    }
+    console.timeEnd('Time check for US portal validation')
+    // fh.removeSourceList(dataDir, urlInfo)
+    console.log(`reset ${publisher} workspace, #of deleted sources: ${cnt}`)
+}
+if (require.main == module) {
+    main()
+}

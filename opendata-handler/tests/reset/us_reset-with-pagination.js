@@ -25,6 +25,7 @@ async function main() {
     // distribution name extraction
     const lastPage = 3435
     let p = page
+    let global_cnt = 0
     while (p <= lastPage) {
         urlInfo.page = p
         const rSources = fh.readSourceIds(dataDir, urlInfo)
@@ -52,12 +53,15 @@ async function main() {
                 }
                 i++
             }
+            global_cnt += cnt
             console.timeEnd('Time check for US portal validation')
             fh.removeSourceList(dataDir, urlInfo)
             console.log(`reset ${publisher} workspace, #of deleted sources: ${cnt}`)
         }
         p++
     }
+    console.log(`reset ${publisher} workspace, #of total deleted sources: ${global_cnt}`)
+
 }
 if (require.main == module) {
     main()

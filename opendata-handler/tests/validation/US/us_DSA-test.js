@@ -43,7 +43,7 @@ async function main() {
     }
 
     // const rp = extractor.randomSamplingWithLimit(lastPage, dataDir, urlInfo, 500)
-    const rp = extractor.randomSampling(lastPage, dataDir, urlInfo)
+    const rp = extractor.randomSamplingWithLimit(lastPage, dataDir, urlInfo, 2000)
     const rp_len = rp.length
     console.log(rp)
     console.log(rp_len)
@@ -53,7 +53,7 @@ async function main() {
     let original_cnt = 0
     for (let p = 0; p < rp_len; p++) {
         const pg = rp[p]
-        const name = `ca_p${pg}_${format}_`
+        const name = `us_p${pg}_${format}_`
         // distribution name extraction
         urlInfo.page = pg
         const rUrls = fh.readUrls(dataDir, urlInfo)
@@ -65,7 +65,7 @@ async function main() {
         let j = 0
         let cnt = 0
         const sourceList = []
-        // console.time('Time check for US portal validation')
+
         original_cnt += count
         while (i < count) {
             const url = urlObj.url[i]
@@ -80,15 +80,14 @@ async function main() {
             } else {
                 sourceList.push(sourceId)
                 cnt++
-                // console.log("odlSource/validation succeeded")
             }
             i++
         }
-        // console.timeEnd('Time check for US portal validation')
 
         urlInfo.count = cnt
         global_cnt += cnt
         urlInfo.dataType = 'source'
+        urlInfo.dirType = 2000
         const writeSource = fh.writeSourceIds(sourceList, urlInfo)
         console.log(`create and validate for ODL data service activity`)
         console.log(`number of created sources in ${publisher}: ${cnt}`)
@@ -97,8 +96,6 @@ async function main() {
     console.timeEnd(`Time check for ${publisher} portal validation with random pagenation`)
     console.log(`Number of ${format} files in ${publisher} portal: ${original_cnt}`)
     console.log(`Number of created sources in ${publisher} portal ${format} files: ${global_cnt}`)
-
-    // console.log(`(${global_cnt}/${original_cnt}) * 100 %`)
 
 }
 if (require.main == module) {
