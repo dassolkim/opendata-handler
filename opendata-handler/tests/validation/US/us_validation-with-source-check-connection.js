@@ -32,7 +32,6 @@ async function main() {
     let p = page
     let global_cnt = 0
     let global_fcnt = 0
-    const pg_list = [3301, 978, 2887, 1013]
     while (p <= lastPage) {
         urlInfo.page = p
         const rSources = fh.readSourceIds(dataDir, urlInfo)
