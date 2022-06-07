@@ -27,14 +27,19 @@ async function main() {
         publisher: publisher,
         page: page
     }
+    urlInfo.dirType = 1000
+    const f_list = fh.readDirs(dataDir, urlInfo)
+    const length = f_list.length
 
     console.time(`Time check for ${publisher} portal validation with check_connection`)
-    let p = page
+    let p = 0
     let global_cnt = 0
     let global_fcnt = 0
-    while (p <= lastPage) {
-        urlInfo.page = p
-        const rSources = fh.readSourceIds(dataDir, urlInfo)
+    while (p < length) {
+        // urlInfo.page = p
+        // const rSources = fh.readSourceIds(dataDir, urlInfo)
+        const rSources = fh.readIdFile(dataDir, urlInfo, f_list[p])
+
         if (rSources == false) {
             // continue
             console.log(`${p} catalogs does not contain ${format} files`)
