@@ -41,11 +41,12 @@ async function main() {
         publisher: publisher,
         page: page
     }
-
-    const rp = extractor.randomSamplingWithLimit(lastPage, dataDir, urlInfo, 500)
+    const limit = 1000
+    const rp = extractor.randomSampling(lastPage, dataDir, urlInfo, limit)
     // // const rp = extractor.randomSampling(lastPage, dataDir, urlInfo)
-
     const rp_len = rp.length
+    console.log(rp)
+    console.log(rp_len)
 
     console.time(`Time check for ${publisher} portal validation with random pagenation`)
     let global_cnt = 0
@@ -85,6 +86,7 @@ async function main() {
         urlInfo.count = cnt
         global_cnt += cnt
         urlInfo.dataType = 'source'
+        urlInfo.dirType = limit
         const writeSource = fh.writeSourceIds(sourceList, urlInfo)
         console.log(`create and validate for ODL data service activity`)
         console.log(`number of created sources in ${publisher}: ${cnt}`)
