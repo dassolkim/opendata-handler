@@ -46,20 +46,20 @@ async function main() {
             let i = 0
             let cnt = 0
             console.time('Time check for US portal validation')
-            // while (i < count) {
-            //     const source = sourceObj.sourceList[i]
-            //     if (source != undefined) {
-            //         // console.log(source)
-            //         const removeResult = await remove.removeSource(configInfo.defaultUrl, source)
-            //         if (removeResult == true) {
-            //             cnt++
-            //             console.log("odlSource/reset succeeded")
-            //         } else {
-            //             console.log("odlSource/reset failed")
-            //         }
-            //     }
-            //     i++
-            // }
+            while (i < count) {
+                const source = sourceObj.sourceList[i]
+                if (source != undefined) {
+                    // console.log(source)
+                    const removeResult = await remove.removeSource(configInfo.defaultUrl, source)
+                    if (removeResult == true) {
+                        cnt++
+                        console.log("odlSource/reset succeeded")
+                    } else {
+                        console.log("odlSource/reset failed")
+                    }
+                }
+                i++
+            }
             global_cnt += cnt
             console.timeEnd('Time check for US portal validation')
             fh.removeIdFiles(dataDir, urlInfo, f_list[p])
