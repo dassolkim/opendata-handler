@@ -43,11 +43,22 @@ async function main() {
     }
 
     // const rp = extractor.randomSamplingWithLimit(lastPage, dataDir, urlInfo, 500)
-    // const rp = extractor.randomSamplingWithLimit(lastPage, dataDir, urlInfo, 100)
-    // const rp = extractor.randomSampling(lastPage, dataDir, urlInfo)
-    // const rp = extractor.randomSamplingWithLimit(lastPage, dataDir, urlInfo, 100)
+    const limit = 100
+    const rp = extractor.randomSampling(lastPage, dataDir, urlInfo, limit)
 
-    const rp = extractor.randomSamplingWithFairness(lastPage, dataDir, urlInfo, 1000)
+    /*
+    // 2000
+    const rp = [ 203,  45, 121, 194, 357, 233, 52, 426, 339, 112, 248, 241, 364,  78,  77, 352, 155,  26, 447 ]
+    // 1000
+    const rp = [197, 208, 19]
+    // 500
+    const rp = [ 229, 44, 234, 161, 355 ]
+    // 100
+    const rp = [ 313, 75 ]
+    // 101
+    const rp = [ 73, 93, 461, 322, 301 ]
+    */
+
     const rp_len = rp.length
     console.log(rp)
     console.log(rp_len)
@@ -89,11 +100,10 @@ async function main() {
             i++
         }
 
-
         urlInfo.count = cnt
         global_cnt += cnt
         urlInfo.dataType = 'source'
-        urlInfo.dirType = 100
+        urlInfo.dirType = limit
         const writeSource = fh.writeSourceIds(sourceList, urlInfo)
         console.log(`create and validate for ODL data service activity`)
         console.log(`number of created sources in ${publisher}: ${cnt}`)
@@ -102,8 +112,6 @@ async function main() {
     console.timeEnd(`Time check for ${publisher} portal validation with random pagenation`)
     console.log(`Number of ${format} files in ${publisher} portal: ${original_cnt}`)
     console.log(`Number of created sources in ${publisher} portal ${format} files: ${global_cnt}`)
-
-    // console.log(`(${global_cnt}/${original_cnt}) * 100 %`)
 
 }
 if (require.main == module) {
