@@ -41,7 +41,7 @@ async function main() {
         publisher: publisher,
         page: page
     }
-    const limit = 1000
+    const limit = 100
     let rp = []
     let cnt = 0
     while (true) {
@@ -56,9 +56,7 @@ async function main() {
         }
     }
     console.log(rp)
-    // const rp = [76, 238, 249, 58]
     const rp_len = rp.length
-    // console.log(rp)
     console.log(rp_len)
 
     console.time(`Time check for ${publisher} portal validation with random pagenation`)
