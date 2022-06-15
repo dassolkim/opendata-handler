@@ -53,8 +53,7 @@ async function main() {
     let global_fcnt = 0
     while (p < length) {
         urlInfo.page = f_list[p] // modify
-        // const rSources = fh.readIdFile(dataDir, urlInfo, f_list[p])
-        const rSources = fh.readSourceIds(dataDir, urlInfo)
+        const rSources = fh.readIdFile(dataDir, urlInfo, f_list[p])
         if (rSources == false) {
             // continue
             console.log(`${p} catalogs does not contain ${format} files`)
