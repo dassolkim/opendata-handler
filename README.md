@@ -1,4 +1,4 @@
-# Open data handler
+# Open data manager
 ## Components
 1. Data Collector   
 2. RDF Parser   
