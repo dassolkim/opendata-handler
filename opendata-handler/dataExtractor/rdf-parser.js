@@ -1,6 +1,6 @@
 const { XMLParser, XMLBuilder, XMLValidator } = require('fast-xml-parser')
 
-module.exports = { catalogParser, distributionParser, datasetParser, schemaParser, socrataDatasetParser }
+module.exports = { catalogParser, distributionParser, datasetParser, schemaParser, socrataDatasetParser, odsDatasetParser }
 
 
 function catalogParser(data) {
@@ -89,4 +89,32 @@ function socrataDatasetParser(catalog) {
     }
 
     return dist_list
+}
+
+function odsDatasetParser(catalog, format) {
+    const data = catalog
+    const dist = data['rdf:RDF']['rdf:Description']
+    // const dataset_count = dataset.length
+    // console.log(dataset)
+    if (dist) {
+        const count = Object.keys(dist).length;
+        console.log(`Number of Distribution in Catalog: ${count}`)
+        let i = 0
+        let j = 0
+        let url_list = []
+        while (i < count) {
+            const exist = dist[i]
+            if(exist != undefined){
+                if (dist[i]['dct:format'] == format) {
+                    if (dist[i]['dcat:accessURL']){
+                        url_list[j] = dist[i]['dcat:accessURL']['@_rdf:resource']
+                        j++
+                    }
+                }
+                i++
+            } else {i++}
+        }
+        return url_list
+    } else { return false }
+
 }
