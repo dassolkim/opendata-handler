@@ -1,7 +1,7 @@
 const axios = require('axios').default
 
 // shared api
-module.exports = { getCatalog, getNextCatalog, getDataset, getSocrata }
+module.exports = { getCatalog, getNextCatalog, getDataset, getSocrata, getOpenDataSoft}
 
 function getCatalog(sourceInfo) {
   
@@ -52,6 +52,21 @@ function getNextCatalog(sourceInfo, page) {
 function getSocrata(sourceInfo) {
   
     const url = sourceInfo.defaultUrl + "data.json"
+
+    const result = axios.get(url)
+        .then(function (response) {
+            const data = response.data
+            return data
+
+        }).catch(function (error) {
+            console.log(error)
+        })
+    return result
+}
+
+function getOpenDataSoft(sourceInfo) {
+  
+    const url = sourceInfo.defaultUrl + "/api/v2/catalog/exports/rdf"
 
     const result = axios.get(url)
         .then(function (response) {

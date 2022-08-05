@@ -3,11 +3,10 @@ const dc = require('./data-collector')
 const fh = require('../fileHandler/file-handler')
 const rp = require('../dataExtractor/rdf-parser')
 const path = require('path')
-// const { count } = require('console')
 const defaultPath = path.join('C:/Users/kimds/nodeProject', 'data/')
 
 
-module.exports = { downloadAllCatalog, downloadAllUrls, downloadSocrataDataset }
+module.exports = { downloadAllCatalog, downloadAllUrls, downloadSocrataDataset, downloadODSDataset }
 
 /* const sourceInfo = {
     defaultUrl: config.USdefaultUrl,
@@ -36,8 +35,19 @@ async function downloadAllCatalog(sourceInfo, end) {
             console.log('storing file is failed')
         }
 
+    } else if (sourceInfo.publisher == "Opendatasoft") {
+        const catalog = await dc.getOpenDataSoft(sourceInfo)
+        console.log(`######### Collect ${sourceInfo.name}, page ${end} on Web (data portal) #########`)
+        sourceInfo.page = end
+        const file = await fh.writeCatalog(catalog, sourceInfo)
+        if (file) {
+            console.log(`collecting and storing ${sourceInfo.name} file is succeeded`)
+        } else {
+            console.log('storing file is failed')
+        }
+
     } else {
-        for (let page = 1; page <= end; page++) {
+        for (let page = 100; page <= end; page++) {
             const catalog = await dc.getNextCatalog(sourceInfo, page)
             console.log(`######### Collect ${sourceInfo.name}, page ${page} on Web (data portal) #########`)
             sourceInfo.page = page
@@ -66,6 +76,7 @@ async function downloadAllUrls(sourceInfo, format, end) {
     for (let page = 1; page < end; page++) {
         sourceInfo.page = page
         const catalog = await fh.readCatalog(dataDir, sourceInfo)
+        console.log(catalog)
         if (!catalog) {
             console.log(`read data is failed`)
         } else {
@@ -105,7 +116,8 @@ async function downloadSocrataDataset(sourceInfo, format, page) {
         name: sourceInfo.name,
         type: 'url',
         format: format.toLowerCase(),
-        publisher: sourceInfo.publisher
+        publisher: sourceInfo.publisher,
+        page: page
     }
 
     console.log(`######### Collect ${sourceInfo.name} on Web (data portal) #########`)
@@ -151,6 +163,44 @@ async function downloadSocrataDataset(sourceInfo, format, page) {
             total_count = count
 
             const wUrls = await fh.writeUrls(url_list, urlInfo)
+            if (wUrls) {
+                console.log(`write urls to files is succeeded`)
+            }
+        }
+    }
+    console.log(`total ${format} files in ${sourceInfo.publisher} open data portal: ${total_count}`)
+    return total_count
+}
+
+async function downloadODSDataset(sourceInfo, format, page) {
+
+    const dataDir = defaultPath
+    const urlInfo = {
+        name: sourceInfo.name,
+        type: 'url',
+        format: format.toLowerCase(),
+        publisher: sourceInfo.publisher
+    }
+
+    console.log(`######### Collect ${sourceInfo.name} on Web (data portal) #########`)
+    const catalog = await fh.readCatalog(dataDir, sourceInfo)
+    let total_count
+    // console.log(catalog)
+    if (!catalog) {
+        console.log(`read data is failed`)
+    } else {
+        const parseData = await rp.catalogParser(catalog)
+
+        const urls = await rp.odsDatasetParser(parseData, urlInfo.format)
+        console.log(urls)
+        if (urls) {
+            const count = urls.length
+            console.log(`number of csv files in catalog page ${page}: ${count}`)
+            urlInfo.page = page
+            urlInfo.count = count
+            total_count = count
+
+            const wUrls = await fh.writeUrls(urls, urlInfo)
             if (wUrls) {
                 console.log(`write urls to files is succeeded`)
             }

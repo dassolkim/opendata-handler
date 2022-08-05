@@ -24,8 +24,33 @@ async function ustest(){
 
     return url
 }
-
 // ustest()
+
+async function comparitive_test(){
+    const USsourceInfo = {
+        defaultUrl: config.USdefaultUrl,
+        type: 'catalog',
+        name: 'us_catalog',
+        publisher: 'US_with_CE'
+    }
+    /**
+     * Get RDF Catalog Test
+     */
+    const catalog = await dd.downloadAllCatalog(USsourceInfo, 1000)
+    console.log(`######### Collect ${USsourceInfo.name} on Web (data portal) #########`)
+    // console.log(catalog)
+        // downloader test
+    // add JSON extraction
+    // const url = await dd.downloadAllUrls(USsourceInfo, 'CSV', 3436)
+    const url = await dd.downloadAllUrls(USsourceInfo, 'CSV', 1000)
+
+    return url
+}
+
+// comparitive_test()
+
+
+
 
 async function canadatest(){
     const CAsourceInfo = {
@@ -68,7 +93,7 @@ async function uktest(){
     const url = await dd.downloadAllUrls(UKsourceInfo, 'CSV', 521)
     return url
 }
-uktest()
+// uktest()
 
 async function dkan_test(){
     const OKsourceInfo = {
@@ -115,3 +140,24 @@ async function socrata_test(){
     return url
 }
 // socrata_test()
+
+async function ods_test(){
+    const ODSsourceInfo = {
+        defaultUrl: config.LSdefaultUrl,
+        type: 'catalog',
+        name: 'ods_catalog',
+        publisher: 'Opendatasoft',
+        page: 1
+    }
+    /**
+     * Get RDF Catalog Test
+     */
+    const catalog = await dd.downloadAllCatalog(ODSsourceInfo, 1)
+    console.log(`######### Collect ${ODSsourceInfo.name} on Web (data portal) #########`)
+ 
+    const url = await dd.downloadODSDataset(ODSsourceInfo, 'CSV', 1)
+
+    return url
+}
+
+ods_test()
